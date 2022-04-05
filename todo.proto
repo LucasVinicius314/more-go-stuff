@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option go_package = "/todo";
+
+service TodoList {
+  rpc AddTodo (AddTodoRequest) returns (AddTodoReply) {}
+}
+
+message AddTodoRequest {
+  string name = 1;
+}
+
+message AddTodoReply {
+  string message = 1;
+}
