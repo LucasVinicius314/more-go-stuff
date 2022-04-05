@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+option go_package = "/todo";
+
+service TodoList {
+  rpc AddTodo (AddTodoRequest) returns (AddTodoReply) {}
+
+  rpc GetTodo (GetTodoRequest) returns (GetTodoReply) {}
+
+  rpc EditTodo (EditTodoRequest) returns (EditTodoReply) {}
+
+  rpc RemoveTodo (RemoveTodoRequest) returns (RemoveTodoReply) {}
+}
+
+message AddTodoRequest {
+  string title = 1;
+  string content = 2;
+}
+
+message AddTodoReply {
+  string message = 1;
+}
+
+message GetTodoRequest {
+  string id = 1;
+}
+
+message GetTodoReply {
+  string id = 1;
+  string title = 2;
+  string content = 3;
+  string createdAt = 4;
+  string updatedAt = 5;
+}
+
+message EditTodoRequest {
+  string id = 1;
+  string title = 2;
+  string content = 3;
+}
+
+message EditTodoReply {
+  string message = 1;
+}
+
+message RemoveTodoRequest {
+  string id = 1;
+}
+
+message RemoveTodoReply {
+  string message = 1;
+}
