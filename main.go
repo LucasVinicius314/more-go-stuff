@@ -11,7 +11,6 @@ import (
 
 	firebase "firebase.google.com/go"
 	"github.com/jschoedt/go-firestorm"
-	mapper "github.com/jschoedt/go-structmapper"
 	"google.golang.org/api/option"
 	"google.golang.org/grpc"
 )
@@ -25,15 +24,8 @@ type Server struct {
 }
 
 func (s *Server) AddTodo(ctx context.Context, in *todo.AddTodoRequest) (*todo.AddTodoReply, error) {
-	log.Printf("Received: %v", in.GetName())
-
-	return &todo.AddTodoReply{Message: "Hello " + in.GetName()}, nil
-}
-
-func main() {
-	// firestore
-
-	ctx := context.Background()
+	title := in.GetTitle()
+	content := in.GetContent()
 
 	sa := option.WithCredentialsFile("service-account.json")
 
@@ -51,33 +43,33 @@ func main() {
 
 	defer client.Close()
 
-	// firestorm
-
 	fsc := firestorm.New(client, "ID", "")
 
-	fsc.MapFromDB.MapFunc =
-		func(inKey string, inVal interface{}) (mt mapper.MappingType, outKey string, outVal interface{}) {
-			return mapper.Default, inKey, outVal
-		}
+	// fsc.MapFromDB.MapFunc =
+	// 	func(inKey string, inVal interface{}) (mt mapper.MappingType, outKey string, outVal interface{}) {
+	// 		return mapper.Custom, inKey, outVal
+	// 	}
 
-	fsc.MapToDB.MapFunc =
-		func(inKey string, inVal interface{}) (mt mapper.MappingType, outKey string, outVal interface{}) {
-			return mapper.Custom, inKey, outVal
-		}
+	// fsc.MapToDB.MapFunc =
+	// 	func(inKey string, inVal interface{}) (mt mapper.MappingType, outKey string, outVal interface{}) {
+	// 		return mapper.Custom, inKey, outVal
+	// 	}
 
 	now := time.Now()
 
 	instance := &todo.Todo{
-		Title:     "Test",
-		Content:   "Maybe",
+		Title:     title,
+		Content:   content,
 		CreatedAt: now,
 		UpdatedAt: now,
 	}
 
 	fsc.NewRequest().CreateEntities(ctx, instance)()
 
-	// grpc
+	return &todo.AddTodoReply{Message: "Todo created."}, nil
+}
 
+func main() {
 	flag.Parse()
 
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", *port))
