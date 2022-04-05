@@ -11,7 +11,7 @@ The project's launch configuration file resides at `.vscode/launch.json` .
 In order to compile protocol buffers, install [protoc](https://grpc.io/docs/protoc-installation/).
 
 ```bash
-protoc --go_out=todo --go_opt=paths=source_relative --go-grpc_out=todo --go-grpc_opt=paths=source_relative    todo/todo.proto
+protoc --go_out=todo --go_opt=paths=source_relative --go-grpc_out=todo --go-grpc_opt=paths=source_relative todo/todo.proto
 ```
 
 ### Links
