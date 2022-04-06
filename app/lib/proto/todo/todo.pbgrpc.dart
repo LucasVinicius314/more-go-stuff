@@ -1,6 +1,6 @@
 ///
 //  Generated code. Do not modify.
-//  source: todo/todo.proto
+//  source: proto/todo/todo.proto
 //
 // @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
@@ -24,6 +24,11 @@ class TodoListClient extends $grpc.Client {
           '/TodoList/GetTodo',
           ($0.GetTodoRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) => $0.GetTodoReply.fromBuffer(value));
+  static final _$getTodos =
+      $grpc.ClientMethod<$0.GetTodosRequest, $0.GetTodosReply>(
+          '/TodoList/GetTodos',
+          ($0.GetTodosRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.GetTodosReply.fromBuffer(value));
   static final _$editTodo =
       $grpc.ClientMethod<$0.EditTodoRequest, $0.EditTodoReply>(
           '/TodoList/EditTodo',
@@ -49,6 +54,11 @@ class TodoListClient extends $grpc.Client {
   $grpc.ResponseFuture<$0.GetTodoReply> getTodo($0.GetTodoRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getTodo, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.GetTodosReply> getTodos($0.GetTodosRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$getTodos, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.EditTodoReply> editTodo($0.EditTodoRequest request,
@@ -81,6 +91,13 @@ abstract class TodoListServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.GetTodoRequest.fromBuffer(value),
         ($0.GetTodoReply value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.GetTodosRequest, $0.GetTodosReply>(
+        'GetTodos',
+        getTodos_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.GetTodosRequest.fromBuffer(value),
+        ($0.GetTodosReply value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.EditTodoRequest, $0.EditTodoReply>(
         'EditTodo',
         editTodo_Pre,
@@ -107,6 +124,11 @@ abstract class TodoListServiceBase extends $grpc.Service {
     return getTodo(call, await request);
   }
 
+  $async.Future<$0.GetTodosReply> getTodos_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.GetTodosRequest> request) async {
+    return getTodos(call, await request);
+  }
+
   $async.Future<$0.EditTodoReply> editTodo_Pre(
       $grpc.ServiceCall call, $async.Future<$0.EditTodoRequest> request) async {
     return editTodo(call, await request);
@@ -121,6 +143,8 @@ abstract class TodoListServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.AddTodoRequest request);
   $async.Future<$0.GetTodoReply> getTodo(
       $grpc.ServiceCall call, $0.GetTodoRequest request);
+  $async.Future<$0.GetTodosReply> getTodos(
+      $grpc.ServiceCall call, $0.GetTodosRequest request);
   $async.Future<$0.EditTodoReply> editTodo(
       $grpc.ServiceCall call, $0.EditTodoRequest request);
   $async.Future<$0.RemoveTodoReply> removeTodo(

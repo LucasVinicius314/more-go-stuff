@@ -4,7 +4,7 @@ import (
 	"time"
 )
 
-type Todo struct {
+type Todos struct {
 	ID        string
 	Title     string
 	Content   string

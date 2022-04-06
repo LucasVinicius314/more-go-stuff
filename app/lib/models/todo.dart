@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:grpc/grpc.dart';
-import 'package:more_go_stuff/generated/todo/todo.pbgrpc.dart';
+import 'package:more_go_stuff/proto/todo/todo.pbgrpc.dart';
 import 'package:tuple/tuple.dart';
 
 ClientChannel _getChannel() {
@@ -27,7 +27,7 @@ Tuple2<TodoListClient, Future<void> Function()> _getChannelStub() {
   return out;
 }
 
-class Todo {
+class TodoCollection {
   static Future<AddTodoReply> addTodo(AddTodoRequest addTodoRequest) async {
     final channelStub = _getChannelStub();
 

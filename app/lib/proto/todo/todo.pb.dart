@@ -1,6 +1,6 @@
 ///
 //  Generated code. Do not modify.
-//  source: todo/todo.proto
+//  source: proto/todo/todo.proto
 //
 // @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
@@ -8,6 +8,115 @@
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
+
+import '../../google/protobuf/timestamp.pb.dart' as $1;
+
+class Todo extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Todo', createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'title')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'content')
+    ..aOM<$1.Timestamp>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'createdAt', protoName: 'createdAt', subBuilder: $1.Timestamp.create)
+    ..aOM<$1.Timestamp>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'updatedAt', protoName: 'updatedAt', subBuilder: $1.Timestamp.create)
+    ..hasRequiredFields = false
+  ;
+
+  Todo._() : super();
+  factory Todo({
+    $core.String? id,
+    $core.String? title,
+    $core.String? content,
+    $1.Timestamp? createdAt,
+    $1.Timestamp? updatedAt,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    if (title != null) {
+      _result.title = title;
+    }
+    if (content != null) {
+      _result.content = content;
+    }
+    if (createdAt != null) {
+      _result.createdAt = createdAt;
+    }
+    if (updatedAt != null) {
+      _result.updatedAt = updatedAt;
+    }
+    return _result;
+  }
+  factory Todo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Todo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  Todo clone() => Todo()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Todo copyWith(void Function(Todo) updates) => super.copyWith((message) => updates(message as Todo)) as Todo; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static Todo create() => Todo._();
+  Todo createEmptyInstance() => create();
+  static $pb.PbList<Todo> createRepeated() => $pb.PbList<Todo>();
+  @$core.pragma('dart2js:noInline')
+  static Todo getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Todo>(create);
+  static Todo? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get title => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set title($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasTitle() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearTitle() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get content => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set content($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasContent() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearContent() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $1.Timestamp get createdAt => $_getN(3);
+  @$pb.TagNumber(4)
+  set createdAt($1.Timestamp v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasCreatedAt() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearCreatedAt() => clearField(4);
+  @$pb.TagNumber(4)
+  $1.Timestamp ensureCreatedAt() => $_ensure(3);
+
+  @$pb.TagNumber(5)
+  $1.Timestamp get updatedAt => $_getN(4);
+  @$pb.TagNumber(5)
+  set updatedAt($1.Timestamp v) { setField(5, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasUpdatedAt() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearUpdatedAt() => clearField(5);
+  @$pb.TagNumber(5)
+  $1.Timestamp ensureUpdatedAt() => $_ensure(4);
+}
 
 class AddTodoRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddTodoRequest', createEmptyInstance: create)
@@ -166,37 +275,17 @@ class GetTodoRequest extends $pb.GeneratedMessage {
 
 class GetTodoReply extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetTodoReply', createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'title')
-    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'content')
-    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'createdAt', protoName: 'createdAt')
-    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'updatedAt', protoName: 'updatedAt')
+    ..aOM<Todo>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'todo', subBuilder: Todo.create)
     ..hasRequiredFields = false
   ;
 
   GetTodoReply._() : super();
   factory GetTodoReply({
-    $core.String? id,
-    $core.String? title,
-    $core.String? content,
-    $core.String? createdAt,
-    $core.String? updatedAt,
+    Todo? todo,
   }) {
     final _result = create();
-    if (id != null) {
-      _result.id = id;
-    }
-    if (title != null) {
-      _result.title = title;
-    }
-    if (content != null) {
-      _result.content = content;
-    }
-    if (createdAt != null) {
-      _result.createdAt = createdAt;
-    }
-    if (updatedAt != null) {
-      _result.updatedAt = updatedAt;
+    if (todo != null) {
+      _result.todo = todo;
     }
     return _result;
   }
@@ -222,49 +311,85 @@ class GetTodoReply extends $pb.GeneratedMessage {
   static GetTodoReply? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get id => $_getSZ(0);
+  Todo get todo => $_getN(0);
   @$pb.TagNumber(1)
-  set id($core.String v) { $_setString(0, v); }
+  set todo(Todo v) { setField(1, v); }
   @$pb.TagNumber(1)
-  $core.bool hasId() => $_has(0);
+  $core.bool hasTodo() => $_has(0);
   @$pb.TagNumber(1)
-  void clearId() => clearField(1);
+  void clearTodo() => clearField(1);
+  @$pb.TagNumber(1)
+  Todo ensureTodo() => $_ensure(0);
+}
 
-  @$pb.TagNumber(2)
-  $core.String get title => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set title($core.String v) { $_setString(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasTitle() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearTitle() => clearField(2);
+class GetTodosRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetTodosRequest', createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
 
-  @$pb.TagNumber(3)
-  $core.String get content => $_getSZ(2);
-  @$pb.TagNumber(3)
-  set content($core.String v) { $_setString(2, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasContent() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearContent() => clearField(3);
+  GetTodosRequest._() : super();
+  factory GetTodosRequest() => create();
+  factory GetTodosRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetTodosRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GetTodosRequest clone() => GetTodosRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GetTodosRequest copyWith(void Function(GetTodosRequest) updates) => super.copyWith((message) => updates(message as GetTodosRequest)) as GetTodosRequest; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static GetTodosRequest create() => GetTodosRequest._();
+  GetTodosRequest createEmptyInstance() => create();
+  static $pb.PbList<GetTodosRequest> createRepeated() => $pb.PbList<GetTodosRequest>();
+  @$core.pragma('dart2js:noInline')
+  static GetTodosRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetTodosRequest>(create);
+  static GetTodosRequest? _defaultInstance;
+}
 
-  @$pb.TagNumber(4)
-  $core.String get createdAt => $_getSZ(3);
-  @$pb.TagNumber(4)
-  set createdAt($core.String v) { $_setString(3, v); }
-  @$pb.TagNumber(4)
-  $core.bool hasCreatedAt() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearCreatedAt() => clearField(4);
+class GetTodosReply extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetTodosReply', createEmptyInstance: create)
+    ..pc<Todo>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'todos', $pb.PbFieldType.PM, subBuilder: Todo.create)
+    ..hasRequiredFields = false
+  ;
 
-  @$pb.TagNumber(5)
-  $core.String get updatedAt => $_getSZ(4);
-  @$pb.TagNumber(5)
-  set updatedAt($core.String v) { $_setString(4, v); }
-  @$pb.TagNumber(5)
-  $core.bool hasUpdatedAt() => $_has(4);
-  @$pb.TagNumber(5)
-  void clearUpdatedAt() => clearField(5);
+  GetTodosReply._() : super();
+  factory GetTodosReply({
+    $core.Iterable<Todo>? todos,
+  }) {
+    final _result = create();
+    if (todos != null) {
+      _result.todos.addAll(todos);
+    }
+    return _result;
+  }
+  factory GetTodosReply.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetTodosReply.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GetTodosReply clone() => GetTodosReply()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GetTodosReply copyWith(void Function(GetTodosReply) updates) => super.copyWith((message) => updates(message as GetTodosReply)) as GetTodosReply; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static GetTodosReply create() => GetTodosReply._();
+  GetTodosReply createEmptyInstance() => create();
+  static $pb.PbList<GetTodosReply> createRepeated() => $pb.PbList<GetTodosReply>();
+  @$core.pragma('dart2js:noInline')
+  static GetTodosReply getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetTodosReply>(create);
+  static GetTodosReply? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<Todo> get todos => $_getList(0);
 }
 
 class EditTodoRequest extends $pb.GeneratedMessage {

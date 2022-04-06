@@ -13,14 +13,20 @@ In order to compile protocol buffers, install [protoc](https://grpc.io/docs/prot
 #### Go
 
 ```bash
-protoc --go_out=todo --go_opt=paths=source_relative --go-grpc_out=todo --go-grpc_opt=paths=source_relative todo/todo.proto
+protoc --go_out=. --go_opt=paths=import --go-grpc_out=. --go-grpc_opt=paths=import proto/todo/todo.proto
 ```
 
 #### Dart
 
 ```bash
-protoc --dart_out=app/lib/generated  todo/todo.proto
+protoc --dart_out=grpc:app/lib proto/todo/todo.proto
+
+protoc --dart_out=grpc:app/lib proto/google/protobuf/timestamp.proto
 ```
+
+### Todo
+
+* App l10n
 
 ### Links
 

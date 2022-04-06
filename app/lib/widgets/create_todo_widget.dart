@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:more_go_stuff/generated/todo/todo.pb.dart';
 import 'package:more_go_stuff/models/todo.dart';
+import 'package:more_go_stuff/proto/todo/todo.pb.dart';
 
 class CreateTodoWidget extends StatefulWidget {
   const CreateTodoWidget({Key? key}) : super(key: key);
@@ -31,7 +31,7 @@ class _CreateTodoWidgetState extends State<CreateTodoWidget> {
       final title = _titleController.text;
       final content = _contentController.text;
 
-      final response = await Todo.addTodo(
+      final response = await TodoCollection.addTodo(
         AddTodoRequest()
           ..title = title
           ..content = content,

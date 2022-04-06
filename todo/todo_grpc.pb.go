@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion7
 type TodoListClient interface {
 	AddTodo(ctx context.Context, in *AddTodoRequest, opts ...grpc.CallOption) (*AddTodoReply, error)
 	GetTodo(ctx context.Context, in *GetTodoRequest, opts ...grpc.CallOption) (*GetTodoReply, error)
+	GetTodos(ctx context.Context, in *GetTodosRequest, opts ...grpc.CallOption) (*GetTodosReply, error)
 	EditTodo(ctx context.Context, in *EditTodoRequest, opts ...grpc.CallOption) (*EditTodoReply, error)
 	RemoveTodo(ctx context.Context, in *RemoveTodoRequest, opts ...grpc.CallOption) (*RemoveTodoReply, error)
 }
@@ -50,6 +51,15 @@ func (c *todoListClient) GetTodo(ctx context.Context, in *GetTodoRequest, opts .
 	return out, nil
 }
 
+func (c *todoListClient) GetTodos(ctx context.Context, in *GetTodosRequest, opts ...grpc.CallOption) (*GetTodosReply, error) {
+	out := new(GetTodosReply)
+	err := c.cc.Invoke(ctx, "/TodoList/GetTodos", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *todoListClient) EditTodo(ctx context.Context, in *EditTodoRequest, opts ...grpc.CallOption) (*EditTodoReply, error) {
 	out := new(EditTodoReply)
 	err := c.cc.Invoke(ctx, "/TodoList/EditTodo", in, out, opts...)
@@ -74,6 +84,7 @@ func (c *todoListClient) RemoveTodo(ctx context.Context, in *RemoveTodoRequest, 
 type TodoListServer interface {
 	AddTodo(context.Context, *AddTodoRequest) (*AddTodoReply, error)
 	GetTodo(context.Context, *GetTodoRequest) (*GetTodoReply, error)
+	GetTodos(context.Context, *GetTodosRequest) (*GetTodosReply, error)
 	EditTodo(context.Context, *EditTodoRequest) (*EditTodoReply, error)
 	RemoveTodo(context.Context, *RemoveTodoRequest) (*RemoveTodoReply, error)
 	mustEmbedUnimplementedTodoListServer()
@@ -88,6 +99,9 @@ func (UnimplementedTodoListServer) AddTodo(context.Context, *AddTodoRequest) (*A
 }
 func (UnimplementedTodoListServer) GetTodo(context.Context, *GetTodoRequest) (*GetTodoReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTodo not implemented")
+}
+func (UnimplementedTodoListServer) GetTodos(context.Context, *GetTodosRequest) (*GetTodosReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTodos not implemented")
 }
 func (UnimplementedTodoListServer) EditTodo(context.Context, *EditTodoRequest) (*EditTodoReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EditTodo not implemented")
@@ -144,6 +158,24 @@ func _TodoList_GetTodo_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _TodoList_GetTodos_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTodosRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TodoListServer).GetTodos(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/TodoList/GetTodos",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TodoListServer).GetTodos(ctx, req.(*GetTodosRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _TodoList_EditTodo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(EditTodoRequest)
 	if err := dec(in); err != nil {
@@ -196,6 +228,10 @@ var TodoList_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _TodoList_GetTodo_Handler,
 		},
 		{
+			MethodName: "GetTodos",
+			Handler:    _TodoList_GetTodos_Handler,
+		},
+		{
 			MethodName: "EditTodo",
 			Handler:    _TodoList_EditTodo_Handler,
 		},
@@ -205,5 +241,5 @@ var TodoList_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "todo.proto",
+	Metadata: "proto/todo/todo.proto",
 }

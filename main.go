@@ -13,6 +13,7 @@ import (
 	"github.com/jschoedt/go-firestorm"
 	"google.golang.org/api/option"
 	"google.golang.org/grpc"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 var (
@@ -22,16 +23,6 @@ var (
 type Server struct {
 	todo.UnimplementedTodoListServer
 }
-
-// fsc.MapFromDB.MapFunc =
-// 	func(inKey string, inVal interface{}) (mt mapper.MappingType, outKey string, outVal interface{}) {
-// 		return mapper.Custom, inKey, outVal
-// 	}
-
-// fsc.MapToDB.MapFunc =
-// 	func(inKey string, inVal interface{}) (mt mapper.MappingType, outKey string, outVal interface{}) {
-// 		return mapper.Custom, inKey, outVal
-// 	}
 
 func (s *Server) AddTodo(ctx context.Context, in *todo.AddTodoRequest) (*todo.AddTodoReply, error) {
 	title := in.GetTitle()
@@ -57,7 +48,7 @@ func (s *Server) AddTodo(ctx context.Context, in *todo.AddTodoRequest) (*todo.Ad
 
 	now := time.Now()
 
-	instance := &todo.Todo{
+	instance := &todo.Todos{
 		Title:     title,
 		Content:   content,
 		CreatedAt: now,
@@ -90,11 +81,43 @@ func (s *Server) GetTodo(ctx context.Context, in *todo.GetTodoRequest) (*todo.Ge
 
 	fsc := firestorm.New(client, "ID", "")
 
-	instance := &todo.Todo{ID: id}
+	instance := &todo.Todos{ID: id}
 
 	fsc.NewRequest().GetEntities(ctx, instance)()
 
-	return &todo.GetTodoReply{Id: instance.ID, Title: instance.Title, Content: instance.Content, CreatedAt: instance.CreatedAt.Format(time.RFC3339), UpdatedAt: instance.UpdatedAt.Format(time.RFC3339)}, nil
+	return &todo.GetTodoReply{Todo: &todo.Todo{Id: instance.ID, Title: instance.Title, Content: instance.Content, CreatedAt: timestamppb.New(instance.CreatedAt), UpdatedAt: timestamppb.New(instance.UpdatedAt)}}, nil
+}
+
+func (s *Server) GetTodos(ctx context.Context, in *todo.GetTodosRequest) (*todo.GetTodosReply, error) {
+	sa := option.WithCredentialsFile("service-account.json")
+
+	app, err := firebase.NewApp(ctx, nil, sa)
+
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	client, err := app.Firestore(ctx)
+
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	defer client.Close()
+
+	fsc := firestorm.New(client, "ID", "")
+
+	instances := []todo.Todos{}
+
+	fsc.NewRequest().GetEntities(ctx, instances)()
+
+	newInstances := make([]*todo.Todo, len(instances))
+
+	for i, v := range instances {
+		newInstances[i] = &todo.Todo{Id: v.ID, Title: v.Title, Content: v.Content, CreatedAt: timestamppb.New(v.CreatedAt), UpdatedAt: timestamppb.New(v.UpdatedAt)}
+	}
+
+	return &todo.GetTodosReply{Todos: newInstances}, nil
 }
 
 func (s *Server) EditTodo(ctx context.Context, in *todo.EditTodoRequest) (*todo.EditTodoReply, error) {
@@ -122,7 +145,7 @@ func (s *Server) EditTodo(ctx context.Context, in *todo.EditTodoRequest) (*todo.
 
 	now := time.Now()
 
-	instance := &todo.Todo{ID: id}
+	instance := &todo.Todos{ID: id}
 
 	fsc.NewRequest().GetEntities(ctx, instance)()
 
@@ -156,7 +179,7 @@ func (s *Server) RemoveTodo(ctx context.Context, in *todo.RemoveTodoRequest) (*t
 
 	fsc := firestorm.New(client, "ID", "")
 
-	instance := &todo.Todo{ID: id}
+	instance := &todo.Todos{ID: id}
 
 	fsc.NewRequest().DeleteEntities(ctx, instance)()
 

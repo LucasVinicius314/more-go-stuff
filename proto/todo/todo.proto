@@ -2,14 +2,26 @@ syntax = "proto3";
 
 option go_package = "/todo";
 
+import "google/protobuf/timestamp.proto";
+
 service TodoList {
   rpc AddTodo (AddTodoRequest) returns (AddTodoReply) {}
 
   rpc GetTodo (GetTodoRequest) returns (GetTodoReply) {}
 
+  rpc GetTodos (GetTodosRequest) returns (GetTodosReply) {}
+
   rpc EditTodo (EditTodoRequest) returns (EditTodoReply) {}
 
   rpc RemoveTodo (RemoveTodoRequest) returns (RemoveTodoReply) {}
+}
+
+message Todo {
+  string id = 1;
+  string title = 2;
+  string content = 3;
+  google.protobuf.Timestamp createdAt = 4;
+  google.protobuf.Timestamp updatedAt = 5;
 }
 
 message AddTodoRequest {
@@ -26,11 +38,13 @@ message GetTodoRequest {
 }
 
 message GetTodoReply {
-  string id = 1;
-  string title = 2;
-  string content = 3;
-  string createdAt = 4;
-  string updatedAt = 5;
+  Todo todo = 1;
+}
+
+message GetTodosRequest {}
+
+message GetTodosReply {
+  repeated Todo todos = 1;
 }
 
 message EditTodoRequest {
