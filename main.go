@@ -105,16 +105,22 @@ func (s *Server) GetTodos(ctx context.Context, in *todo.GetTodosRequest) (*todo.
 
 	defer client.Close()
 
-	fsc := firestorm.New(client, "ID", "")
+	query := client.Collection("Todos").Query
 
-	instances := []todo.Todos{}
+	docs, err := query.Documents(ctx).GetAll()
 
-	fsc.NewRequest().GetEntities(ctx, instances)()
+	newInstances := make([]*todo.Todo, len(docs))
 
-	newInstances := make([]*todo.Todo, len(instances))
+	for i, v := range docs {
+		data := v.Data()
 
-	for i, v := range instances {
-		newInstances[i] = &todo.Todo{Id: v.ID, Title: v.Title, Content: v.Content, CreatedAt: timestamppb.New(v.CreatedAt), UpdatedAt: timestamppb.New(v.UpdatedAt)}
+		id := v.Ref.ID
+		title := data["title"].(string)
+		content := data["content"].(string)
+		createdat := data["createdat"].(time.Time)
+		updatedat := data["updatedat"].(time.Time)
+
+		newInstances[i] = &todo.Todo{Id: id, Title: title, Content: content, CreatedAt: timestamppb.New(createdat), UpdatedAt: timestamppb.New(updatedat)}
 	}
 
 	return &todo.GetTodosReply{Todos: newInstances}, nil

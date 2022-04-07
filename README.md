@@ -27,6 +27,8 @@ protoc --dart_out=grpc:app/lib proto/google/protobuf/timestamp.proto
 ### Todo
 
 * App l10n
+* Host project
+* App deploy workflow
 
 ### Links
 

@@ -45,4 +45,22 @@ class TodoCollection {
 
     return response;
   }
+
+  static Future<GetTodosReply> getTodos() async {
+    final channelStub = _getChannelStub();
+
+    final stub = channelStub.item1;
+
+    final response = await stub.getTodos(GetTodosRequest());
+
+    await channelStub.item2();
+
+    if (kDebugMode) {
+      print(DateTime.now());
+      print(stub.runtimeType);
+      print(response);
+    }
+
+    return response;
+  }
 }

@@ -1,9 +1,15 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:more_go_stuff/models/todo.dart';
 import 'package:more_go_stuff/proto/todo/todo.pb.dart';
 
 class CreateTodoWidget extends StatefulWidget {
-  const CreateTodoWidget({Key? key}) : super(key: key);
+  const CreateTodoWidget({
+    Key? key,
+    required this.refetch,
+  }) : super(key: key);
+
+  final void Function() refetch;
 
   @override
   State<CreateTodoWidget> createState() => _CreateTodoWidgetState();
@@ -39,6 +45,12 @@ class _CreateTodoWidgetState extends State<CreateTodoWidget> {
 
       _titleController.clear();
       _contentController.clear();
+
+      try {
+        widget.refetch();
+      } catch (e) {
+        if (kDebugMode) rethrow;
+      }
 
       await showDialog(
         context: context,
